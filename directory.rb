@@ -13,9 +13,20 @@ students = [
   "John Lyall",
   "Alvin Martin"
 ]
-puts "The Academy"
-puts "----------------"
-students.each do |student|
-  puts student
+
+def print_header
+  puts "The Academy"
+  puts "----------------"
 end
-puts "Overall we have #{student_count} great students"
+def print(students)
+  students.each do |student|
+    puts student
+  end
+end
+def print_footer(students)
+ puts "Overall we have #{students.count} great students"
+end
+
+print_header
+print(students)
+print_footer(students)
