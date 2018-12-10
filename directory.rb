@@ -1,3 +1,5 @@
+
+student_count = 11
 puts "The student of the academy"
 puts "-----------------"
 puts "Bob Smith"
@@ -11,5 +13,4 @@ puts "Trevor Brooking"
 puts "Pat Holland"
 puts "John Lyall"
 puts "Alvin Martin"
-print "Overall we have"
-print " 11 great students"
+puts "Overall we have #{student_count} great students"
