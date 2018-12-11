@@ -11,13 +11,29 @@ def input_students
   students
 end
 
+def student_filter
+  while true
+    puts "Enter a letter:"
+    filter = gets.chomp
+    if filter.length == 1
+      break
+    else puts "Enter just one letter"
+    end
+  end
+  filter
+end
+
 def print_header
-  puts "The Academy"
+  puts "The Academy of Football"
   puts "----------------"
 end
+
 def print(students)
-  students.each do |student|
-    puts "Name: #{student[:name]} - (Cohort: #{student[:cohort]})"
+  filter = student_filter
+  students.each_with_index do |student, index|
+    if student[:name].start_with?(filter)
+      puts "#{index + 1}: Name: #{student[:name]} - (Cohort: #{student[:cohort]})"
+    end
   end
 end
 
