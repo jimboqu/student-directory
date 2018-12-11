@@ -9,7 +9,7 @@ def input_students
       hobbies = gets.chomp
       puts "Enter place of birth:"
       city = gets.chomp
-      students << {name: name, cohort: :January, hobbies: hobbies, country: city}
+      students << {name: name, cohort: :January, hobbies: hobbies, city: city}
       puts "Now we have #{students.count} students"
       name = gets.chomp
     end
@@ -40,13 +40,14 @@ def print(students)
   count = students.count
   i = 0
   while i < count
-    if students[i][:name].start_with?(filter) && students[i][:name].length <= 12
-      puts "#{i+1}: Name: #{students[i][:name]} - Cohort: #{students[i][:cohort]} - Hobbies: #{students[i][:hobbies]} - Country: #{students[i][:city]}"
+    if students[i][:name].start_with?(filter) || students[i][:name].start_with?(filter.capitalize) && students[i][:name].length <= 12
+      puts "#{i+1}: Name: #{students[i][:name].center(12)}\n   Cohort:" + students[i][:cohort].to_s.center(12) + "\n   Hobbies: #{students[i][:hobbies].center(8)} \n   Country: #{students[i][:city].center(8)}"
+      puts "--------------"
     end
     i+=1
   end
 end
-
+# line up the text. look at using \n
 
 def print_footer(students)
   puts "Overall we have #{students.count} great students"
