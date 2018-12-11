@@ -37,10 +37,24 @@ def print(students)
   end
 end
 
+def while_loop(students)
+  filter = student_filter
+  count = students.count
+  i = 0
+  while i < count
+    if students[i][:name].start_with?(filter) && students[i][:name].length <= 12
+      puts "#{i+1}: Name: #{students[i][:name]} - (Cohort: #{students[i][:cohort]})"
+    end
+    i+=1
+  end
+
+end
+
+
 def print_footer(students)
- puts "Overall we have #{students.count} great students"
+  puts "Overall we have #{students.count} great students"
 end
 students = input_students
 print_header
-print(students)
+while_loop(students)
 print_footer(students)
