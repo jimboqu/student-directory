@@ -1,17 +1,17 @@
 
-
-
 def input_students
   puts "Enter the name of student"
   puts "To finish, hit return twice"
   students = []
   name = gets.chomp
-  hobbies = gets.chomp
     while !name.empty? do
-      students << {name: name, cohort: :January, hobbies: hobbies}
+      puts "Enter hobbies:"
+      hobbies = gets.chomp
+      puts "Enter country:"
+      country = gets.chomp
+      students << {name: name, cohort: :January, hobbies: hobbies, country: country}
       puts "Now we have #{students.count} students"
       name = gets.chomp
-      hobbies = gets.chomp
     end
   students
   # Find a way to keep asking for hobbies as well as name. At the moment, hobbies only works for one.
@@ -35,22 +35,13 @@ def print_header
   puts "----------------"
 end
 
-def old_print_method(students)
-  filter = student_filter
-  students.each_with_index do |student, index|
-    if student[:name].start_with?(filter) && student[:name].length <= 12
-      puts "#{index + 1}: Name: #{student[:name]} - Cohort: #{student[:cohort]}"
-    end
-  end
-end
-
 def print(students)
   filter = student_filter
   count = students.count
   i = 0
   while i < count
     if students[i][:name].start_with?(filter) && students[i][:name].length <= 12
-      puts "#{i+1}: Name: #{students[i][:name]} - (Cohort: #{students[i][:cohort]}) - Hobbies #{students[i][:hobbies]}"
+      puts "#{i+1}: Name: #{students[i][:name]} - Cohort: #{students[i][:cohort]} - Hobbies: #{students[i][:hobbies]} - Country: #{students[i][:country]}"
     end
     i+=1
   end
