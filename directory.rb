@@ -7,9 +7,9 @@ def input_students
     while !name.empty? do
       puts "Enter hobbies:"
       hobbies = gets.chomp
-      puts "Enter country:"
-      country = gets.chomp
-      students << {name: name, cohort: :January, hobbies: hobbies, country: country}
+      puts "Enter place of birth:"
+      city = gets.chomp
+      students << {name: name, cohort: :January, hobbies: hobbies, country: city}
       puts "Now we have #{students.count} students"
       name = gets.chomp
     end
@@ -41,7 +41,7 @@ def print(students)
   i = 0
   while i < count
     if students[i][:name].start_with?(filter) && students[i][:name].length <= 12
-      puts "#{i+1}: Name: #{students[i][:name]} - Cohort: #{students[i][:cohort]} - Hobbies: #{students[i][:hobbies]} - Country: #{students[i][:country]}"
+      puts "#{i+1}: Name: #{students[i][:name]} - Cohort: #{students[i][:cohort]} - Hobbies: #{students[i][:hobbies]} - Country: #{students[i][:city]}"
     end
     i+=1
   end
