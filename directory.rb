@@ -78,6 +78,10 @@ end
 def print(students)
   filter = student_filter
   count = students.count
+  if count < 1 || nil
+    puts "There are no students entered"
+    input_students
+  end
   i = 0
   while i < count
     if students[i][:name].start_with?(filter) || students[i][:name].start_with?(filter.capitalize) && students[i][:name].length <= 12
