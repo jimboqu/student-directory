@@ -1,3 +1,26 @@
+def order_students(students)
+  students.sort_by! { |hsh| hsh[:cohort] }
+  students
+end
+
+def add_cohort
+  puts "Add cohort month (January, April, July, October):"
+  while true
+    cohort = gets.chomp.capitalize
+    if cohort == "January" || cohort == "April" || cohort == "July" || cohort == "October"
+      cohort = cohort
+      break
+    elsif
+      cohort == ""
+      cohort = "TBC"
+      break
+    else
+      puts "Not recognised. Can you enter again"
+      cohort = "wrong"
+    end
+  end
+  return cohort.to_sym
+end
 
 def input_students
   puts "Enter the name of student"
@@ -5,17 +28,17 @@ def input_students
   students = []
   name = gets.chomp
     while !name.empty? do
+      cohort = add_cohort
       puts "Enter hobbies:"
       hobbies = gets.chomp
       puts "Enter place of birth:"
       city = gets.chomp
-      students << {name: name, cohort: :January, hobbies: hobbies, city: city}
+      students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
       puts "Now we have #{students.count} students"
       name = gets.chomp
     end
+  students = order_students(students)
   students
-  # Find a way to keep asking for hobbies as well as name. At the moment, hobbies only works for one.
-  # Tempted to put the input in a separate method and pass it all through.
 end
 
 def student_filter
