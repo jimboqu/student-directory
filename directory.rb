@@ -1,4 +1,4 @@
-
+@students = []
 def pluralize(number)
   if number == 1
     return "student"
@@ -11,9 +11,8 @@ def remove_gets_return(string)
   return string.rstrip
 end
 
-def order_students(students)
-  students.sort_by! { |hsh| hsh[:cohort] }
-  students
+def order_students
+  @students.sort_by! { |hsh| hsh[:cohort] }
 end
 
 def add_cohort
@@ -39,7 +38,7 @@ end
 def input_students
   puts "Enter the name of student"
   puts "To finish, hit return twice"
-  students = []
+  #students = []
   name = gets
   name = remove_gets_return(name)
     while !name.empty? do
@@ -50,12 +49,11 @@ def input_students
       puts "Enter place of birth:"
       city = gets
       city = remove_gets_return(city)
-      students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
-      puts "Now we have #{students.count} #{pluralize(students.count)}."
+      @students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
+      puts "Now we have #{@students.count} #{pluralize(@students.count)}."
       name = gets.chomp
     end
-  students = order_students(students)
-  students
+  order_students
 end
 
 def student_filter
@@ -75,17 +73,17 @@ def print_header
   puts "----------------"
 end
 
-def print(students)
+def print
   filter = student_filter
-  count = students.count
+  count = @students.count
   if count < 1 || nil
     puts "There are no students entered"
     input_students
   end
   i = 0
   while i < count
-    if students[i][:name].start_with?(filter) || students[i][:name].start_with?(filter.capitalize) && students[i][:name].length <= 12
-      puts "#{i+1}: Name: #{students[i][:name].center(12)}\n   Cohort:" + students[i][:cohort].to_s.center(12) + "\n   Hobbies: #{students[i][:hobbies].center(8)} \n   Country: #{students[i][:city].center(8)}"
+    if @students[i][:name].start_with?(filter) || @students[i][:name].start_with?(filter.capitalize) && @students[i][:name].length <= 12
+      puts "#{i+1}: Name: #{@students[i][:name].center(12)}\n   Cohort:" + @students[i][:cohort].to_s.center(12) + "\n   Hobbies: #{@students[i][:hobbies].center(8)} \n   Country: #{@students[i][:city].center(8)}"
       puts "--------------"
     end
     i+=1
@@ -93,10 +91,40 @@ def print(students)
 end
 # line up the text. look at using \n
 
-def print_footer(students)
-  puts "Overall we have #{students.count} great #{pluralize(students.count)}."
+def print_footer
+  puts "Overall we have #{@students.count} great #{pluralize(@students.count)}."
 end
-students = input_students
-print_header
-print(students)
-print_footer(students)
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print
+  print_footer
+end
+
+def process(selection)
+  case selection
+  when "1"
+    students = input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you meant, try again"
+  end
+end
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+interactive_menu
