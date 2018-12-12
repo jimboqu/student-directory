@@ -171,5 +171,6 @@ def interactive_menu
   end
 end
 
+
 try_load_students
 interactive_menu
