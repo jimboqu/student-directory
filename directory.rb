@@ -7,7 +7,7 @@ def pluralize(number)
   end
 end
 
-def remove_gets_return(string)
+def gets_return(string)
   return string.rstrip
 end
 
@@ -18,8 +18,8 @@ end
 def add_cohort
   puts "Add cohort month (January, April, July, October):"
   while true
-    cohort = gets.capitalize
-    cohort = remove_gets_return(cohort)
+    cohort = STDIN.gets.capitalize
+    cohort = gets_return(cohort)
     if cohort == "January" || cohort == "April" || cohort == "July" || cohort == "October"
       cohort = cohort
       break
@@ -39,19 +39,19 @@ def input_students
   puts "Enter the name of student"
   puts "To finish, hit return twice"
   #students = []
-  name = gets
-  name = remove_gets_return(name)
+  name = STDIN.gets
+  name = gets_return(name)
     while !name.empty? do
       cohort = add_cohort
       puts "Enter hobbies:"
-      hobbies = gets
-      hobbies = remove_gets_return(hobbies)
+      hobbies = STDIN.gets
+      hobbies = remove_STDIN.gets_return(hobbies)
       puts "Enter place of birth:"
-      city = gets
-      city = remove_gets_return(city)
+      city = STDIN.gets
+      city = remove_STDIN.gets_return(city)
       @students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
       puts "Now we have #{@students.count} #{pluralize(@students.count)}."
-      name = gets.chomp
+      name = STDIN.gets.chomp
     end
   order_students
 end
@@ -69,8 +69,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobbies, city = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
@@ -78,10 +78,22 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil? # get out of the method if it isn't given
+  if File.exists?(filename) # if it exists
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit # quit the program
+  end
+end
+
 def student_filter
   while true
     puts "Enter a letter:"
-    filter = gets.chomp
+    filter = STDIN.gets.chomp
     if filter.length == 1
       break
     else puts "Enter just one letter"
@@ -151,8 +163,9 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
+try_load_students
 interactive_menu
