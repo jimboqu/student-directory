@@ -1,3 +1,16 @@
+
+def pluralize(number)
+  if number == 1
+    return "student"
+  else
+    return "students"
+  end
+end
+
+def remove_gets_return(string)
+  return string.rstrip
+end
+
 def order_students(students)
   students.sort_by! { |hsh| hsh[:cohort] }
   students
@@ -6,7 +19,8 @@ end
 def add_cohort
   puts "Add cohort month (January, April, July, October):"
   while true
-    cohort = gets.chomp.capitalize
+    cohort = gets.capitalize
+    cohort = remove_gets_return(cohort)
     if cohort == "January" || cohort == "April" || cohort == "July" || cohort == "October"
       cohort = cohort
       break
@@ -26,15 +40,18 @@ def input_students
   puts "Enter the name of student"
   puts "To finish, hit return twice"
   students = []
-  name = gets.chomp
+  name = gets
+  name = remove_gets_return(name)
     while !name.empty? do
       cohort = add_cohort
       puts "Enter hobbies:"
-      hobbies = gets.chomp
+      hobbies = gets
+      hobbies = remove_gets_return(hobbies)
       puts "Enter place of birth:"
-      city = gets.chomp
+      city = gets
+      city = remove_gets_return(city)
       students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{students.count} #{pluralize(students.count)}."
       name = gets.chomp
     end
   students = order_students(students)
@@ -73,7 +90,7 @@ end
 # line up the text. look at using \n
 
 def print_footer(students)
-  puts "Overall we have #{students.count} great students"
+  puts "Overall we have #{students.count} great #{pluralize(students.count)}."
 end
 students = input_students
 print_header
