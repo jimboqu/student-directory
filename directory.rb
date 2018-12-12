@@ -45,15 +45,24 @@ def input_students
       cohort = add_cohort
       puts "Enter hobbies:"
       hobbies = STDIN.gets
-      hobbies = remove_STDIN.gets_return(hobbies)
+      hobbies = gets_return(hobbies)
       puts "Enter place of birth:"
       city = STDIN.gets
-      city = remove_STDIN.gets_return(city)
+      city = gets_return(city)
       @students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
       puts "Now we have #{@students.count} #{pluralize(@students.count)}."
       name = STDIN.gets.chomp
     end
   order_students
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+  name, cohort, hobbies, city = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
+  end
+  file.close
 end
 
 def save_students
@@ -65,15 +74,6 @@ def save_students
     #if there's a problem with saving its in hobbies and city
     csv_line = student_data.join(",")
     file.puts csv_line
-  end
-  file.close
-end
-
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort, hobbies, city = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
   end
   file.close
 end
