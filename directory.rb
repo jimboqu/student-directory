@@ -49,18 +49,22 @@ def input_students
       puts "Enter place of birth:"
       city = STDIN.gets
       city = gets_return(city)
-      @students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
+      load_or_input_students(name, cohort, hobbies, city)
       puts "Now we have #{@students.count} #{pluralize(@students.count)}."
       name = STDIN.gets.chomp
     end
   order_students
 end
 
+def load_or_input_students(name, cohort, hobbies, city)
+  @students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
+end
+
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobbies, city = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
+    load_or_input_students(name, cohort, hobbies, city)
   end
   file.close
 end
