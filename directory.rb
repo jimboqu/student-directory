@@ -51,13 +51,14 @@ def input_students
       city = gets_return(city)
       load_or_input_students(name, cohort, hobbies, city)
       puts "Now we have #{@students.count} #{pluralize(@students.count)}."
+      puts @students.inspect
       name = STDIN.gets.chomp
     end
   order_students
 end
 
 def load_or_input_students(name, cohort, hobbies, city)
-  @students << {name: name, cohort: cohort, hobbies: hobbies, city: city}
+  @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
 end
 
 def load_students(filename = "students.csv")
@@ -113,6 +114,7 @@ end
 
 def print
   count = @students.count
+  order_students
   if count < 1 || nil
     puts "There are no students entered"
     interactive_menu
@@ -170,7 +172,6 @@ def interactive_menu
     process(STDIN.gets.chomp)
   end
 end
-
 
 try_load_students
 interactive_menu
