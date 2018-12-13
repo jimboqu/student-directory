@@ -77,15 +77,10 @@ def load_or_input_students(name, cohort, hobbies, city)
 end
 
 def input_load_file
-  puts "Enter a filename or hit return if you want the default students.csv"
-  filename = gets
-  filename = gets_return(filename)
-  if filename.empty?
-    load_students("students.csv")
-  else
-    puts filename
-    load_students(filename)
-  end
+  #does what try load does
+  puts "Enter your filename:"
+  input_file = gets.chomp
+  load_students(input_file)
 end
 
 def load_students(filename)
@@ -95,7 +90,7 @@ def load_students(filename)
     load_or_input_students(name, cohort, hobbies, city)
   end
   file.close
-  puts "File loaded"
+  puts "#{filename } loaded"
 end
 
 def save_students
