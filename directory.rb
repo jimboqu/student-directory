@@ -18,8 +18,7 @@ end
 def add_cohort
   puts "Add cohort month (January, April, July, October):"
   while true
-    cohort = STDIN.gets.capitalize
-    cohort = gets_return(cohort)
+    cohort = input_cohort
     if cohort == "January" || cohort == "April" || cohort == "July" || cohort == "October"
       cohort = cohort
       break
@@ -35,26 +34,42 @@ def add_cohort
   return cohort.to_sym
 end
 
-def input_students
+def input_interests
+  puts "Enter interests:"
+  hobbies = STDIN.gets
+  hobbies = gets_return(hobbies)
+end
+
+def input_cohort
+  cohort = STDIN.gets.capitalize
+  cohort = gets_return(cohort)
+end
+
+def input_address
+  puts "Enter place of birth:"
+  city = STDIN.gets
+  city = gets_return(city)
+end
+
+def input_name
   puts "Enter the name of student"
-  puts "To finish, hit return twice"
-  #students = []
   name = STDIN.gets
   name = gets_return(name)
+end
+
+def input_students_messages
+  puts "1 student added. Now we have #{@students.count} #{pluralize(@students.count)}."
+  puts "Add another student or hit return to menu."
+end
+
+def input_students
+  name = input_name
     while !name.empty? do
-      cohort = add_cohort
-      puts "Enter hobbies:"
-      hobbies = STDIN.gets
-      hobbies = gets_return(hobbies)
-      puts "Enter place of birth:"
-      city = STDIN.gets
-      city = gets_return(city)
-      load_or_input_students(name, cohort, hobbies, city)
-      puts "Now we have #{@students.count} #{pluralize(@students.count)}."
-      puts @students.inspect
+      load_or_input_students(name, add_cohort, input_interests, input_address)
+      input_students_messages
       name = STDIN.gets.chomp
     end
-  order_students
+  #order_students
 end
 
 def load_or_input_students(name, cohort, hobbies, city)
@@ -68,32 +83,31 @@ def load_students(filename = "students.csv")
     load_or_input_students(name, cohort, hobbies, city)
   end
   file.close
+  puts "File loaded"
 end
 
 def save_students
-  # open the file for writing
   file = File.open("students.csv", "w")
-  # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobbies], student[:city]]
-    #if there's a problem with saving its in hobbies and city
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  puts "Students saved to file"
 end
 
 def try_load_students
-  filename = ARGV.first # first argument from the command line
+  filename = ARGV.first
   if filename.nil?
     filename = "students.csv"
-  end # get out of the method if it isn't given
-  if File.exists?(filename) # if it exists
+  end
+  if File.exists?(filename)
     load_students(filename)
      puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
+  else
     puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
+    exit
   end
 end
 
@@ -131,7 +145,6 @@ def print
     i+=1
   end
 end
-# line up the text. look at using \n
 
 def print_footer
   puts "Overall we have #{@students.count} great #{pluralize(@students.count)}."
