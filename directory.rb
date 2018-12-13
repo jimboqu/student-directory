@@ -76,7 +76,19 @@ def load_or_input_students(name, cohort, hobbies, city)
   @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
 end
 
-def load_students(filename = "students.csv")
+def input_load_file
+  puts "Enter a filename or hit return if you want the default students.csv"
+  filename = gets
+  filename = gets_return(filename)
+  if filename.empty?
+    load_students("students.csv")
+  else
+    puts filename
+    load_students(filename)
+  end
+end
+
+def load_students(filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobbies, city = line.chomp.split(',')
@@ -117,7 +129,7 @@ def student_filter
     filter = STDIN.gets.chomp
     if filter.length == 1
       break
-    else puts "Enter just one letter"
+      else puts "Enter just one letter please"
     end
   end
   filter
@@ -173,7 +185,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_students
+    input_load_file
   when "9"
     exit
   else
