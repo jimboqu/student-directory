@@ -94,6 +94,15 @@ end
 
 def load_students(filename="students.csv")
   @students = []
+    if File.exist?(filename)
+      load_from_file(filename)
+    else
+      puts "There is no file called that, sorry"
+      interactive_menu
+    end
+end
+
+def load_from_file(filename)
   File.open(filename, "r") do |file|
     CSV.foreach(file) do |line|
     name, cohort, hobbies, city = line
