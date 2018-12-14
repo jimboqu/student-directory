@@ -1,3 +1,4 @@
+require 'CSV'
 @students = []
 def pluralize(number)
   if number == 1
@@ -86,26 +87,25 @@ def file_operation(what_function)
   end
 end
 
-# Ok this needs to be refactored.
-
 def load_students(filename="students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort, hobbies, city = line.chomp.split(',')
-    load_or_input_students(name, cohort, hobbies, city)
+  @students = []
+  File.open(filename, "r") do |file|
+    file.readlines.each do |line|
+    name, cohort, hobbies, city = line.chomp.split(',')
+      load_or_input_students(name, cohort, hobbies, city)
+    end
   end
-  file.close
   puts "#{filename } loaded"
 end
 
 def save_students(save_file)
-  file = File.open(save_file, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:hobbies], student[:city]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open(save_file, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:hobbies], student[:city]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
   puts "Students saved to file"
 end
 
