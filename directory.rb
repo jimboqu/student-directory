@@ -97,8 +97,7 @@ def load_students(filename="students.csv")
     if File.exist?(filename)
       load_from_file(filename)
     else
-      puts "There is no file called that, sorry"
-      interactive_menu
+
     end
 end
 
@@ -113,6 +112,15 @@ def load_from_file(filename)
 end
 
 def save_students(save_file)
+  if File.exist?(save_file)
+    save_to_file(save_file)
+  else
+    puts "There is no file called that, sorry!"
+    interactive_menu
+  end
+end
+
+def save_to_file(save_file)
   File.open(save_file, "w") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:hobbies], student[:city]]
@@ -121,6 +129,7 @@ def save_students(save_file)
     end
   end
   puts "Students saved to file"
+
 end
 
 def try_load_students
