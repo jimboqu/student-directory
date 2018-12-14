@@ -73,7 +73,12 @@ def input_students
 end
 
 def load_or_input_students(name, cohort, hobbies, city)
-  @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
+  if name != nil
+    @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
+  else
+    puts "There are no students in this file"
+    return @students = []
+  end
 end
 
 def file_operation(what_function)
