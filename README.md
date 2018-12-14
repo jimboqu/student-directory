@@ -3,7 +3,7 @@
 The Student Directory script allows you to manage the students listed at the academy.
 
 ## How to use ##
-To use this file you need to create a separate file in the same directory as directory.rb called 'students.csv'. 
+To use this program you need to create a separate file in the same directory as directory.rb called 'students.csv'. 
 ```shell
 ruby directory.rb
 ```
