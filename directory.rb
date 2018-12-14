@@ -90,8 +90,8 @@ end
 def load_students(filename="students.csv")
   @students = []
   File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-    name, cohort, hobbies, city = line.chomp.split(',')
+    CSV.foreach(file) do |line|
+    name, cohort, hobbies, city = line
       load_or_input_students(name, cohort, hobbies, city)
     end
   end
@@ -102,7 +102,7 @@ def save_students(save_file)
   File.open(save_file, "w") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort], student[:hobbies], student[:city]]
-      csv_line = student_data.join(",")
+      csv_line = student_data.to_csv
       file.puts csv_line
     end
   end
@@ -165,8 +165,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save students to students.csv"
-  puts "4. Load students from students.csv"
+  puts "3. Save students"
+  puts "4. Load new students file"
   puts "9. Exit"
 end
 
