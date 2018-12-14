@@ -149,10 +149,12 @@ def print
   end
   filter = student_filter
   i = 0
+  puts "------------------------------------------------------------"
+  puts "No." + "Name".center(12) + "Cohort".center(12) + "Interests".center(30) + "Location".center(12)
   while i < count
     if @students[i][:name].start_with?(filter) || @students[i][:name].start_with?(filter.capitalize) && @students[i][:name].length <= 12
-      puts "#{i+1}: Name: #{@students[i][:name].center(12)}\n   Cohort:" + @students[i][:cohort].to_s.center(12) + "\n   Hobbies: #{@students[i][:hobbies].center(8)} \n   Country: #{@students[i][:city].center(8)}"
-      puts "--------------"
+      puts "#{i+1} #{@students[i][:name].center(13)}" + @students[i][:cohort].to_s.center(12) + "#{@students[i][:hobbies].center(30)}#{@students[i][:city].center(12)}"
+      puts "--------------------------------------------------------------"
     end
     i+=1
   end
