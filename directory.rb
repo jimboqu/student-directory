@@ -69,21 +69,26 @@ def input_students
       input_students_messages
       name = STDIN.gets.chomp
     end
-  #order_students
 end
 
 def load_or_input_students(name, cohort, hobbies, city)
   @students << {name: name, cohort: cohort.to_sym, hobbies: hobbies, city: city}
 end
 
-def input_load_file
-  #does what try load does
+def file_operation(what_function)
   puts "Enter your filename:"
   input_file = gets.chomp
-  load_students(input_file)
+  if what_function == "save"
+    save_students(input_file)
+  elsif
+    what_function == "load"
+    load_students(input_file)
+  end
 end
 
-def load_students(filename)
+# Ok this needs to be refactored.
+
+def load_students(filename="students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort, hobbies, city = line.chomp.split(',')
@@ -93,8 +98,8 @@ def load_students(filename)
   puts "#{filename } loaded"
 end
 
-def save_students
-  file = File.open("students.csv", "w")
+def save_students(save_file)
+  file = File.open(save_file, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:hobbies], student[:city]]
     csv_line = student_data.join(",")
@@ -178,9 +183,9 @@ def process(selection)
   when "2"
     show_students
   when "3"
-    save_students
+    file_operation("save")
   when "4"
-    input_load_file
+    file_operation("load")
   when "9"
     exit
   else
